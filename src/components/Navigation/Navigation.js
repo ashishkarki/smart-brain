@@ -1,20 +1,38 @@
-import React from 'react';
+import React from 'react'
+import { ROUTE_NAMES } from '../../constants'
+import ProfileIcon from '../Profile/ProfileIcon'
 
 const Navigation = ({ onRouteChange, isSignedIn }) => {
-    if (isSignedIn) {
-      return (
-        <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <p onClick={() => onRouteChange('signout')} className='f3 link dim black underline pa3 pointer'>Sign Out</p>
-        </nav>
-      );
-    } else {
-      return (
-        <nav style={{display: 'flex', justifyContent: 'flex-end'}}>
-          <p onClick={() => onRouteChange('signin')} className='f3 link dim black underline pa3 pointer'>Sign In</p>
-          <p onClick={() => onRouteChange('register')} className='f3 link dim black underline pa3 pointer'>Register</p>
-        </nav>
-      );
-    }
+  if (isSignedIn) {
+    return (
+      <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <ProfileIcon onRouteChange={onRouteChange} />
+        {/* <p
+          onClick={() => onRouteChange('signout')}
+          className="f3 link dim black underline pa3 pointer"
+        >
+          Sign Out
+        </p> */}
+      </nav>
+    )
+  } else {
+    return (
+      <nav style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <p
+          onClick={() => onRouteChange(ROUTE_NAMES.SIGNIN)}
+          className="f3 link dim black underline pa3 pointer"
+        >
+          Sign In
+        </p>
+        <p
+          onClick={() => onRouteChange(ROUTE_NAMES.REGISTER)}
+          className="f3 link dim black underline pa3 pointer"
+        >
+          Register
+        </p>
+      </nav>
+    )
+  }
 }
 
-export default Navigation;
+export default React.memo(Navigation)
