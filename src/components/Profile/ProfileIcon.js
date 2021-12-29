@@ -7,7 +7,7 @@ import {
 import React, { useState } from 'react'
 import { ROUTE_NAMES } from '../../constants'
 
-function ProfileIcon({ onRouteChange }) {
+function ProfileIcon({ onRouteChange, toggleModal }) {
   const [profileState, setProfileState] = useState({
     dropdownOpen: false,
   })
@@ -27,7 +27,7 @@ function ProfileIcon({ onRouteChange }) {
       <Dropdown isOpen={profileState.dropdownOpen} toggle={toggle}>
         <DropdownToggle caret>Dropdown</DropdownToggle>
         <DropdownMenu>
-          <DropdownItem>View Profile</DropdownItem>
+          <DropdownItem onClick={toggleModal}>View Profile</DropdownItem>
           <DropdownItem onClick={() => onRouteChange(ROUTE_NAMES.SIGNOUT)}>
             Signout
           </DropdownItem>

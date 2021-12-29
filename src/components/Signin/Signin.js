@@ -1,4 +1,5 @@
 import React from 'react'
+import { ROUTE_NAMES } from '../../constants'
 
 class Signin extends React.PureComponent {
   constructor(props) {
@@ -27,10 +28,10 @@ class Signin extends React.PureComponent {
       }),
     })
       .then((response) => response.json())
-      .then((user) => {
-        if (user.id) {
-          this.props.loadUser(user)
-          this.props.onRouteChange('home')
+      .then((data) => {
+        if (data.userId) {
+          this.props.loadUser(data)
+          this.props.onRouteChange(ROUTE_NAMES.HOME)
         }
       })
   }

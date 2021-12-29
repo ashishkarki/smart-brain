@@ -7,8 +7,10 @@ import Register from './components/Register/Register'
 import Logo from './components/Logo/Logo'
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm'
 import Rank from './components/Rank/Rank'
+import MyModal from './components/MyModal/MyModal'
 import './App.css'
 import { ROUTE_NAMES } from './constants'
+import MyProfile from './components/Profile/MyProfile'
 
 const particlesOptions = {
   //customize this to your liking
@@ -29,6 +31,7 @@ const initialState = {
   box: {},
   route: ROUTE_NAMES.HOME,
   isSignedIn: true,
+  isProfileOpen: false,
   user: {
     id: '',
     name: '',
@@ -125,26 +128,50 @@ class App extends Component {
     this.setState({ route: newRoute })
   }
 
+  toggleModal = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      isProfileOpen: !prevState.isProfileOpen,
+    }))
+  }
+
   render() {
-    const { isSignedIn, imageUrl, route, box } = this.state
+    const { isSignedIn, imageUrl, route, box, isProfileOpen } = this.state
     return (
       <div className="App">
         <Particles className="particles" params={particlesOptions} />
+
         <Navigation
           isSignedIn={isSignedIn}
           onRouteChange={this.onRouteChange}
+          toggleModal={this.toggleModal}
         />
+
+        {isProfileOpen ? (
+          <MyModal>
+            <div>My modal content</div>
+            <MyProfile
+              userObj={this.state.user}
+              isProfileOpen={isProfileOpen}
+              toggleModal={this.toggleModal}
+            />
+          </MyModal>
+        ) : null}
+
         {route === ROUTE_NAMES.HOME ? (
           <div>
             <Logo />
+
             <Rank
               name={this.state.user.name}
               entries={this.state.user.entries}
             />
+
             <ImageLinkForm
               onInputChange={this.onInputChange}
               onButtonSubmit={this.onButtonSubmit}
             />
+
             <FaceRecognition box={box} imageUrl={imageUrl} />
           </div>
         ) : route === ROUTE_NAMES.SIGNIN ? (
